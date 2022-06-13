@@ -2,29 +2,42 @@
 
 using namespace vex;
 
-void draw(void) {
-  Brain.Screen.drawRectangle(75, 75, 100, 100, vex::blue);
-  Brain.Screen.printAt(75, 115, "Left Auton.");
+int screenW = 480;
+int screenH = 240;
 
-  Brain.Screen.drawRectangle(200, 75, 100, 100, vex::blue);
-  Brain.Screen.printAt(200, 115, "Right Auton.");
+int buttonSize = 100;
+
+void draw(void) {
+
+  Brain.Screen.drawRectangle(0, 0, screenW, screenH, vex::orange);
+  Brain.Screen.printAt(screenW/4, screenH/2, "Welcome to Apricot OS!");
+
+  wait(5, sec);
+
+  Brain.Screen.clearScreen();
+
+  Brain.Screen.drawRectangle(screenW*(7/8), screenH/2, buttonSize, buttonSize, vex::purple);
+  Brain.Screen.printAt(screenW*(7/8), screenH/2, "Left Auton.");
+
+  Brain.Screen.drawRectangle(screenW/3, screenH/2, buttonSize, buttonSize, vex::purple);
+  Brain.Screen.printAt(screenW/3, screenH/2, "Right Auton.");
 }
 
 void run(void) {
   while (true) {
-    if (Brain.Screen.xPosition() > 75) {
-      if (Brain.Screen.xPosition() < 175) {
-        if (Brain.Screen.yPosition() > 75) {
-          if (Brain.Screen.yPosition() < 175) {
+    if (Brain.Screen.xPosition() > screenW*(7/8)) {
+      if (Brain.Screen.xPosition() < screenW*(7/8)+buttonSize) {
+        if (Brain.Screen.yPosition() > screenH/2) {
+          if (Brain.Screen.yPosition() < screenH/2+buttonSize) {
             bool leftAuton = true;
           }
         }
       }
     }
-    if (Brain.Screen.xPosition() > 200) {
-      if (Brain.Screen.xPosition() < 300) {
-        if (Brain.Screen.yPosition() > 75) {
-          if (Brain.Screen.yPosition() < 175) {
+    if (Brain.Screen.xPosition() > screenW/3) {
+      if (Brain.Screen.xPosition() < screenW/3+buttonSize) {
+        if (Brain.Screen.yPosition() > screenH/2) {
+          if (Brain.Screen.yPosition() < screenH/2+buttonSize) {
             bool leftAuton = false;
           }
         }
