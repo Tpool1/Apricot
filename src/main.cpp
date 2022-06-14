@@ -19,8 +19,6 @@
 
 using namespace vex;
 
-competition Competition;
-
 // coordinate of robot; initially set to (0,0)
 float coor[2] = {0, 0};
 
@@ -37,6 +35,8 @@ void log_position(float theta, float d) {
   float y = cos(theta)*d;
   coor[0] = coor[0] + x;
   coor[1] = coor[1] + y;
+
+  drawAnalytics(coor);
 }
 
 double trapezoidalRule (int ti, int tf, int sub_intervals, double (*f)(float)) {
@@ -74,7 +74,12 @@ float xt(float x0, int ti, int tf) {
   return result;
 }
 
-void autonomous(void) {
+void leftAuton(void) {
+  Drivetrain.driveFor(forward, 12, inches);
+  log_position(0, 12);
+}
+
+void rightAuton(void) {
   Drivetrain.driveFor(forward, 12, inches);
   log_position(0, 12);
 }
@@ -103,8 +108,16 @@ int main() {
   draw();
 
   Drivetrain.setDriveVelocity(70, percent);
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
+
+  std::string selection = getSelection();
+  
+  if (selection=="left") {
+    leftAuton();
+  } else if (selection=="driver") {
+    usercontrol();
+  } else if (selection=="right") {
+    rightAuton();
+  }
   
   // prevent main from exiting with an infinite loop
   while (true) {
